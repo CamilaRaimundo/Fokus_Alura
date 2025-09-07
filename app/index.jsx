@@ -1,5 +1,9 @@
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Image } from "react-native";
+
 import { FokusButton } from "../components/FokusButton"
+import { ActionButton } from "../components/ActionButton"
+import { Timer } from "../components/Timer"
 
 
 const pomodoro = [
@@ -29,23 +33,20 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Image source={timerType.image}/>
+      <Image source={timerType.image} />
       <View style={styles.actions}>
         <View style={styles.context}>
           {pomodoro.map(p => (
-            <Pressable 
+            <ActionButton
               key={p.id}
-              style={ timerType.id === p.id ? style.contextButtonActive : null }
+              active={timerType.id === p.id}
               onPress={() => setTimerType(p)}
-            >
-              <Text style={styles.contextButtonText}>{p.display}</Text>
-            </Pressable>
-          ))} 
+              display={p.display}
+            />
+          ))}
         </View>
-        <Text style={styles.timer}>
-          { new Date(timerType.initialValue * 1000).toLocaleTimeString('pt-BR', { minute: '2-digit', second: '2-digit' }) }
-        </Text>
-        <FokusButton/>
+        <Timer totalSeconds={timerType.initialValue} />
+        <FokusButton />
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Projeto desensenvolvido no curso da Alura</Text>
@@ -56,7 +57,7 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
 
   actions: {
     padding: 24,
-    backgroundColor:"#14448080",
+    backgroundColor: "#14448080",
     width: "80%",
     borderRadius: 32,
     borderWidth: 2,
@@ -80,31 +81,13 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
 
-  contextButtonText: {
-    fontSize: 12.5,
-    color: "#FFF",
-    padding: 8,
-  },
-
-    contextButtonActive: {
-    backgroundColor: "#144480",
-    borderRadius: 8,
-  },
-
-  timer: {
-    fontSize: 54,
-    color: "#FFF",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
   footer: {
     width: "80%"
   },
 
   footerText: {
-  textAlign: "center",
-  color: "#98A0A8",
-  fontSize: 12.5
+    textAlign: "center",
+    color: "#98A0A8",
+    fontSize: 12.5
   }
 })

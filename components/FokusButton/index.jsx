@@ -8,7 +8,6 @@ export const FokusButton = () => {
     )
 }
 
-
 const styles = StyleSheet.create({
     button: {
         backgroundColor: "#B872FF",
